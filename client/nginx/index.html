@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>通过 Nginx 代理跨域</title>
+</head>
+<body>
+  <script>
+    var xhr = new XMLHttpRequest();
+
+    // 前端开关：浏览器是否读写cookie
+    xhr.withCredentials = true;
+
+    // 访问nginx中的代理服务器
+    xhr.open('get', 'http://www.domain1.com:81/?user=admin', true);
+
+    xhr.send();
+  </script>
+</body>
+</html>
