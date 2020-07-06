@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch 通过 cors 实现跨域</title>
+</head>
+<body>
+  <h1>Fetch 通过 cors 实现跨域</h1>
+  <script>
+    postData('http://localhost:8888', {question: '1+1'})
+      .then(data => console.log(data)) // JSON from `response.json()` call
+      .catch(error => console.error(error))
+
+    // https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
+    function postData(url, data) {
+      // Default options are marked with *
+      return fetch(url, {
+        body: JSON.stringify(data), // must match 'Content-Type' header
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'include', // include, same-origin, *omit
+        headers: {
+          // 'content-type': 'application/x-www-form-urlencoded',
+          // 'content-type': 'application/json',
+        },
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, cors, *same-origin
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // *client, no-referrer
+      })
+      .then(response => response.json()) // parses response to JSON
+    }
+  </script>
+</body>
+</html>
