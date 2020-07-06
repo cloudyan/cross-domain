@@ -13,16 +13,21 @@ const allowOrigin = [
 const server = http.createServer((request, response) => {
   const { method, headers: { origin, cookie } } = request;
 
+  // 允许跨域访问的域名：若有端口需写全（协议+域名+端口），若没有端口末尾不用加'/'
   if (allowOrigin.includes(origin)) {
     response.setHeader('Access-Control-Allow-Origin', origin);
   }
-  response.setHeader('Access-Control-Allow-Methods', 'GET,POST');
+  // 允许前端带认证cookie：启用此项后，上面的域名不能为'*'，必须指定具体的域名，否则浏览器会提示
   response.setHeader('Access-Control-Allow-Credentials', true);
+
+  response.setHeader('Access-Control-Allow-Methods', 'GET,POST');
   response.setHeader('Access-Control-Allow-Headers', 'token');
   response.setHeader('Access-Control-Expose-Headers', 'token');
   response.setHeader('token', 'nodejs-session');
 
   if (method === 'OPTIONS') {
+    // 提示OPTIONS预检时，后端需要设置的两个常用自定义头
+    // response.setHeader("Access-Control-Allow-Headers", "Content-Type,X-Requested-With");
     response.writeHead(204);
     response.end('');
   } else if (!cookie) {
