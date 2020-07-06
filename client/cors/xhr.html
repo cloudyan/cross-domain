@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XHR 通过 CORS 实现跨域</title>
+</head>
+<body>
+  <!-- <h1>XHR 通过 CORS 实现跨域</h1> -->
+  <script>
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'http://localhost:8888');
+
+    // 有自定义 header 头，会多一个预检请求
+    // https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS
+    xhr.setRequestHeader('token', 'customToken');
+
+    // 跨域请求带 cookie
+    xhr.withCredentials = true;
+
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === 4 && xhr.status === 200) {
+        console.log(xhr.responseText)
+        console.log(xhr.getAllResponseHeaders())
+      }
+    }
+
+    xhr.send();
+  </script>
+</body>
+</html>
