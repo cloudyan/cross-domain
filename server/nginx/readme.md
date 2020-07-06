@@ -10,7 +10,7 @@
 
 ```bash
 # 启动 docker nginx
-docker run -it --name nginx -p 5500:80 -v ~/docker/data/h5:/data/apps/h5 -v ~/docker/nginx/conf.d:/etc/nginx/conf.d nginx:alpine sleep 1d
+docker run -it --name nginx -p 5500:80 -v ~/docker/data/h5:/data/apps/h5 -v ~/docker/nginx/conf.d:/etc/nginx/conf.d nginx:alpine /bin/sh
 
 docker exec nginx /bin/sh
 
