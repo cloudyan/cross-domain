@@ -2,9 +2,21 @@
 
 探究跨域的**原因**、**方法实现**及**原理**。
 
-## 跨域产生的原因
+- 跨域产生的原因
+- 跨域的实现方案
+- 跨域实现原理
 
-## 跨域的解决方案
+## 跨域实现
+
+- jsonp
+- document.domain + iframe
+- location.hash + iframe
+- window.name + iframe
+- postMessage
+- cors !!!
+- nginx !!!
+- middleware
+- websocket
 
 参考：
 
