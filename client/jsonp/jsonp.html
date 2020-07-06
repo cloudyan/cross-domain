@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>通过 jsonp 实现跨域</title>
+</head>
+<body>
+  <h1>通过 JSONP 实现跨域</h1>
+  <p>jsonp 缺点：只能实现 get 一种请求</p>
+
+  <script>
+    var script = document.createElement('script');
+    script.src = 'http://localhost:8888/login?user=admin&callback=handleCallback';
+
+    document.head.appendChild(script);
+
+    // 回调执行函数
+    function handleCallback(res) {
+      console.log(JSON.stringify(res))
+    }
+  </script>
+</body>
+</html>
