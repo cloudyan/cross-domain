@@ -30,6 +30,8 @@
 - middleware
 - websocket
 
+- [解决canvas图片getImageData,toDataURL跨域问题](https://www.zhangxinxu.com/wordpress/2018/02/crossorigin-canvas-getimagedata-cors/)
+
 参考：
 
 - [前端常见跨域解决方案（全）](https://segmentfault.com/a/1190000011145364)
