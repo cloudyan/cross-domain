@@ -14,14 +14,17 @@ const server = http.createServer((request, response) => {
   const { method, headers: { origin, cookie } } = request;
 
   // 允许跨域访问的域名：若有端口需写全（协议+域名+端口），若没有端口末尾不用加'/'
+  // 如果需要http请求中带上cookie，需要前后端都设置credentials，且后端设置指定的origin
+  // 允许前端带认证cookie：启用此项后，上面的域名不能为'*'，必须指定具体的域名，否则浏览器会提示
   if (allowOrigin.includes(origin)) {
     response.setHeader('Access-Control-Allow-Origin', origin);
   }
-  // 允许前端带认证cookie：启用此项后，上面的域名不能为'*'，必须指定具体的域名，否则浏览器会提示
   response.setHeader('Access-Control-Allow-Credentials', true);
 
-  response.setHeader('Access-Control-Allow-Methods', 'GET,POST');
-  response.setHeader('Access-Control-Allow-Headers', 'token');
+  // 非简单请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为"预检"请求（preflight）
+  // 这种情况下除了设置origin，还需要设置Access-Control-Request-Method以及Access-Control-Request-Headers
+  response.setHeader('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+  response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, token');
   response.setHeader('Access-Control-Expose-Headers', 'token');
   response.setHeader('token', 'nodejs-session');
 
