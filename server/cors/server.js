@@ -6,6 +6,8 @@ const PORT = 8888;
 const allowOrigin = [
   'http://127.0.0.1:5500',
   'http://localhost:5500',
+  'http://localhost:8090',
+  'http://127.0.0.1:8090',
   // 'https://localhost:5500',
 ];
 
@@ -34,7 +36,11 @@ const server = http.createServer((request, response) => {
     response.writeHead(204);
     response.end('');
   } else if (!cookie) {
-    response.setHeader('Set-Cookie', 'nodejs-session=123qwe');
+    // TIPS:
+    // SameSite=Lax 要求 cros 要同根域，
+    // 如要修复此问题，需改为 SameSite=None,必须同时设置 Secure（Cookie 只能通过 HTTPS 协议发送）
+    // 此处非 https 服务，所以示例有问题
+    response.setHeader('Set-Cookie', 'nodejs-session=123qwe; SameSite=None; Secure');
   }
 
   var body = JSON.stringify({
