@@ -1,13 +1,16 @@
 // 怎么本地实现 https 的服务设置
 // 参考: https://mp.weixin.qq.com/s/LOzSGaimT37P502D2X_buA
 
-// 生成证书
+// 生成证书 https://github.com/FiloSottile/mkcert
 // brew install mkcert
+// brew install nss # if you use Firefox
 // mkcert -install 将根证书加入本地可信CA中
 // cd ./cert && mkcert myname.com
 
 // curl -k https://localhost:8000/
-// curl 测试已经通了，但 chrome/safari 访问会有安全提示
+// chrome/safari 访问会有安全提示？(注意生成证书的格式，后面要加需要的域名或 IP，如：)
+// mkcert localhost 127.0.0.1 ::1
+// mkcert -install
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
@@ -19,8 +22,8 @@ const fs = require('fs');
 // }
 
 const options = {
-  key: fs.readFileSync('./cert/myname.com-key.pem'),
-  cert: fs.readFileSync('./cert/myname.com.pem')
+  key: fs.readFileSync('./localhost+2-key.pem'),
+  cert: fs.readFileSync('./localhost+2.pem')
 };
 
 const PORT = 8000;
