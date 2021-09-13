@@ -32,8 +32,7 @@
 
 ### Todo
 
-- [ ] 本地实现 https
-
+- [x] 本地实现 https
 - [解决canvas图片getImageData,toDataURL跨域问题](https://www.zhangxinxu.com/wordpress/2018/02/crossorigin-canvas-getimagedata-cors/)
 
 参考：
