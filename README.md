@@ -20,20 +20,28 @@
 
 ## 跨域实现
 
-- jsonp
-- document.domain + iframe
-- location.hash + iframe
-- window.name + iframe
-- postMessage
-- cors !!!
-- nginx !!!
-- middleware
-- websocket
+- [x] jsonp
+- [x] document.domain + iframe
+- [x] location.hash + iframe
+- [x] window.name + iframe
+- [x] postMessage
+- [x] cors !!!
+- [x] nginx !!!
+- [x] middleware
+- [x] websocket
 
-### Todo
+## 跨窗口通信方案
+
+- [ ] WebSocket
+- [ ] setInterval + sessionStorage
+- [ ] localStorage
+- [ ] BroadcastChannel
+- [ ] SharedWorker
+
+### 其他
 
 - [x] 本地实现 https
-- [解决canvas图片getImageData,toDataURL跨域问题](https://www.zhangxinxu.com/wordpress/2018/02/crossorigin-canvas-getimagedata-cors/)
+- [ ] [解决canvas图片getImageData,toDataURL跨域问题](https://www.zhangxinxu.com/wordpress/2018/02/crossorigin-canvas-getimagedata-cors/)
 
 参考：
 
@@ -43,3 +51,4 @@
 - [快速入门跨域demo](https://github.com/FatDong1/cross-domain)
 - [跨域请求的8中处理方法](https://github.com/Heyff12/cross-domain)
 - [cross-domain](https://github.com/luoquanquan/cross-domain)
+- [【Web技术】1091- 跨浏览器窗口 ，7种方式，你还知道几种呢？](https://mp.weixin.qq.com/s/739tSKFSLZbfeUR6OOmEhg)
