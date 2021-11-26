@@ -1,13 +1,20 @@
 const http = require('http');
 
+// nodemon ./server/index.js
 const PORT = 8888;
 
 // 协议名必填, 如果同时存在 http 和 https 就写两条
 const allowOrigin = [
-  'http://127.0.0.1:5500',
-  'http://localhost:5500',
+  'http://127.0.0.1:3000',
+  'http://localhost:3000',
+  'http://127.0.0.1:5000',
+  'http://localhost:5000',
+  'http://localhost:8080',
+  'http://127.0.0.1:8080',
   'http://localhost:8090',
   'http://127.0.0.1:8090',
+  'http://localhost:8000',
+  'http://127.0.0.1:8000',
   // 'https://localhost:5500',
 ];
 
@@ -21,6 +28,8 @@ const server = http.createServer((request, response) => {
   if (allowOrigin.includes(origin)) {
     response.setHeader('Access-Control-Allow-Origin', origin);
   }
+
+  // if fetch include or xhr withCredentials
   response.setHeader('Access-Control-Allow-Credentials', true);
 
   // 非简单请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为"预检"请求（preflight）
