@@ -42,7 +42,11 @@
 ### 其他
 
 - [x] 本地实现 https
-- [ ] [解决canvas图片getImageData,toDataURL跨域问题](https://www.zhangxinxu.com/wordpress/2018/02/crossorigin-canvas-getimagedata-cors/)
+- [x] [解决canvas图片getImageData,toDataURL cross-origin跨域问题](https://www.zhangxinxu.com/wordpress/2018/02/crossorigin-canvas-getimagedata-cors/)
+  - 服务端: 添加 `Access-Control-Allow-Origin`
+  - 客户端: 添加 `img.crossOrigin='anonymous'`
+    - 只要`crossOrigin`的属性值不是`use-credentials`，全部都会解析为`anonymous`，包括空字符串，包括类似'abc'这样的字符。
+  - `<= IE10` 不支持 `crossOrigin` 详见上文链接
 
 参考：
 
