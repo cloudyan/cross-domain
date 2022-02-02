@@ -22,6 +22,7 @@
 
 - [x] jsonp
 - [x] document.domain + iframe
+  - document.domain [已弃用](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)，不再推荐此功能。
 - [x] location.hash + iframe
 - [x] window.name + iframe
 - [x] postMessage

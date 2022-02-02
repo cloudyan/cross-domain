@@ -1,6 +1,6 @@
 # Document.domain
 
-> Document.domain 已废弃
+> Document.domain [已弃用](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)，不再推荐此功能。
 
 iframe + document.domain 方案
 
