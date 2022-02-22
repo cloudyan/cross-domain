@@ -27,8 +27,8 @@
 - [x] location.hash + iframe
 - [x] window.name + iframe
 - [x] postMessage
-- [x] cors !!!
-- [x] nginx !!!
+- [x] cors 🔥
+- [x] nginx 🔥
 - [x] middleware
 - [x] websocket
 
