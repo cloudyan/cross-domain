@@ -23,6 +23,7 @@
 - [x] jsonp
 - [x] document.domain + iframe
   - document.domain [已弃用](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)，不再推荐此功能。
+  - 对于 `document.domain`, [chrome 计划](https://developer.chrome.com/blog/immutable-document-domain/)于 100 版本显示警告，106 版本删除 `setter`，就是将禁用修改
 - [x] location.hash + iframe
 - [x] window.name + iframe
 - [x] postMessage
