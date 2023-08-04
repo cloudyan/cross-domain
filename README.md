@@ -21,16 +21,30 @@
 ## 跨域实现
 
 - [x] jsonp
-- [x] document.domain + iframe
-  - document.domain [已弃用](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)，不再推荐此功能。
-  - 对于 `document.domain`, [chrome 计划](https://developer.chrome.com/blog/immutable-document-domain/)于 100 版本显示警告，106 版本删除 `setter`，就是将禁用修改
-- [x] location.hash + iframe
-- [x] window.name + iframe
-- [x] postMessage
 - [x] cors 🔥
 - [x] nginx 🔥
+- [x] postMessage
 - [x] middleware
 - [x] websocket
+- [x] location.hash + iframe
+- [x] window.name + iframe
+- [x] document.domain + iframe
+  - document.domain [已弃用](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)，不再推荐此功能。
+  - 对于 `document.domain`, [Chrome 禁止修改 document.domain](https://developer.chrome.com/blog/document-domain-setter-deprecation/)从 [Chrome 115](https://chromiumdash.appspot.com/schedule) 开始，网站将无法设置 `document.domain`：Chrome 将设置为`document.domain`不可变。
+  - 使用 setter (`document.domain=...`) 不会引发异常。它只会不再产生作用。
+  - 要进行跨源通信，您需要使用替代方法，例如 `postMessage()` Channel Messaging API。
+  - 为什么禁止修改 document.domain
+    - `document.domain` 旨在获取或设置源主机名。许多网站设置 `document.domain` 为允许**同一站点但跨源**页面之间的通信。(即跨站)
+    - 它引入了安全风险，因为它[放宽了同源策略](https://html.spec.whatwg.org/multipage/browsers.html#relaxing-the-same-origin-restriction)。
+  - 参见：chrome://flags 配置项 Disable site isolation
+    - 禁用站点隔离（SitePerProcess、IsolateOrigins等）
+  - [理解“同站”和“同源”](https://web.dev/i18n/zh/same-site-same-origin/)
+    - 同源 和 跨源 same-origin cross-origin
+    - 同站 和 跨站 same-site cross-site
+      - 请求头 Sec-Fetch-Site
+    - [什么是 eTLD + 1？](https://jfhr.me/what-is-an-etld-+-1/)
+
+
 
 ## 跨窗口通信方案
 
