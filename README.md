@@ -44,7 +44,34 @@
       - 请求头 Sec-Fetch-Site
     - [什么是 eTLD + 1？](https://jfhr.me/what-is-an-etld-+-1/)
 
+## 跨域时 cookie 问题
 
+- 采用 iframe 方案，主子应用跨源或跨站场景下 cookie 问题
+  - 主子应用同源：可以携带和共享 Cookie，存在同名属性值被微应用覆盖的风险
+    - 同源 example.com
+    - 主子应用共享 Cookie, 常用来解决登录态问题
+  - 主子应用跨源默认主子应用无法共享 Cookie，可以通过设置 Domain 使得主子应用进行 Cookie 共享
+    - 跨源同站（无关子域、端口, 但协议不同不行）
+    - http://example.com, http://sub.example.com
+    - 主子应用共享设置了主 Domain 的 cookie
+  - 主子应用跨站：子应用默认无法携带 Cookie（防止 CSRF 攻击），需要使用 HTTPS 协议并设置服务端 Cookie 的 SameSite 和 Secure 设置才行，并且子应用无法和主应用形成 Cookie 共享
+    - 跨站：eTLD + 1 不同，但服务 IP 地址 相同
+    - 示例 example.com, sub.example2.com
+    - 一般不考虑跨站，一旦开启适配设置，也容易被 CSRF 攻击
+- Ajax 请求，跨源场景下 cookie 问题
+  - 一般允许跨子域，但不允许跨站
+  - CORS 跨域
+    - 服务端
+      - 添加 `Access-Control-Allow-Origin: ${origin}` 包含 协议，域名及端口
+      - 添加 `Access-Control-Allow-Credentials: true` 携带凭证
+      - 处理非简单请求，需要处理预检请求；
+        - 添加 `Access-Control-Allow-Methods: PUT,POST,GET,DELETE,OPTIONS`
+      - 使用自定义 token 字段，还需要处理自定义头
+        - 添加 `Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, token`
+        - 添加 `Access-Control-Expose-Headers: token`
+    - 客户端(如需要携带凭证，上述 `Access-Control-Allow-Origin` 不能配置为 `*`)
+      - `xhr.withCredentials = true;`
+      - `fetch(url, {credentials:  'include'})`
 
 ## 跨窗口通信方案
 
