@@ -63,6 +63,7 @@
   - CORS 跨域
     - 服务端
       - 添加 `Access-Control-Allow-Origin: ${origin}` 包含 协议，域名及端口
+        - `Access-Control-Allow-Origin: *` 可能会使您的 API/网站容易受到跨站点请求伪造(CSRF) 攻击
       - 添加 `Access-Control-Allow-Credentials: true` 携带凭证
       - 处理非简单请求，需要处理预检请求；
         - 添加 `Access-Control-Allow-Methods: PUT,POST,GET,DELETE,OPTIONS`
@@ -72,6 +73,54 @@
     - 客户端(如需要携带凭证，上述 `Access-Control-Allow-Origin` 不能配置为 `*`)
       - `xhr.withCredentials = true;`
       - `fetch(url, {credentials:  'include'})`
+
+## 资源跨域
+
+为了避免 `Script error.` 问题
+
+原因
+
+`<script>` 标签去请求资源的时候，request 是没有 origin 请求头的。此时如果脚本是跨域的，如果这个脚本有错误，使用 onerror 捕获错误时，跨域脚本的错误只会返回 `Script error.`。
+
+HTML5 新的规定，是可以允许本地获取到跨域脚本的错误信息，但有两个条件：一是跨域脚本的服务器必须通过 Access-Controll-Allow-Origin 头信息允许当前域名可以获取错误信息，二是当前域名的 script 标签也必须指明 src 属性指定的地址是支持跨域的地址，也就是 crossorigin 属性。
+
+解决方案
+
+1. 服务端: Access-Control-Allow-Origin: *
+2. 客户端: crossorigin
+   1. 设置一个空的值，如 crossorigin 或 crossorigin=""，和设置 anonymous 的效果一样。
+
+> `crossorigin=use-credentials` 可以跨域带上cookie。当然也需要服务端配合，添加响应头设置`'Access-Control-Allow-Credentials' = true`
+
+关于 `Vary: Origin`，可使用 `Vary: Origin` 让同一个 URL 有多份缓存
+
+> If CORS protocol requirements are more complicated than setting `Access-Control-Allow-Origin` to * or a static origin, `Vary` is to be used.
+>
+> 如果你的 `Access-Control-Allow-Origin` 响应头不是简单的写死成了*或者某一个特定的源（就是我总结的条件型 CORS 响应），那么你就应该加上`Vary: Origin`响应头。
+
+- https://fetch.spec.whatwg.org/#cors-protocol-and-http-caches
+- https://zhuanlan.zhihu.com/p/38972475
+- http://wscdn.huanleguang.com/assets/oss_img_cors_demo.v3.html
+
+浏览器在哪些情况下会发起 CORS 请求，哪些情况下发起非 CORS 请求，是有严格规定的。比如
+
+- 在一般的 `<img>` 标签下发起的就是个非 CORS 请求
+- 而在 `XHR/fetch` 下默认发起的就是 CORS 请求；
+- 还比如在一般的 `<script>` 标签下发起的是非 CORS 请求（所以才能有 jsonp）
+- 而在新的 `<script type="module">` 下发起的是 CORS 请求
+
+CORS 请求会带上 Origin请求头，用来向别人的网站表明自己是谁；非 CORS 请求不带Origin头。
+
+- 无条件型 CORS 响应
+  - 将 `Access-Control-Allow-Origin` 固定写死为 `*`（允许任意网站访问）
+  - 或者**固定写死特定的某一个源**（只允许这一个网站访问），不论请求头里的 Origin是什么，甚至没有 Origin也一样返回那个值。
+- 条件型 CORS 响应
+  - 区分对待有无 Origin请求头
+  - 区分对待不同的 Origin请求头
+
+> 如果一个源，没有允许跨域，使用 script 非 cors 请求，不会有问题，此时添加 crossorigin="anonymous" 反而会报错。
+>
+> 具体看请求头 `Sec-Fetch-Mode`
 
 ## 跨窗口通信方案
 
